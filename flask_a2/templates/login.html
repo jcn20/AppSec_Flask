@@ -1,0 +1,76 @@
+{%extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                <div id="uname" class="form-group">
+                    {{ form.uname.label(class="form-control-label") }}
+
+                    {% if form.uname.errors%}
+                        {{ form.uname(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.uname.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.uname(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+
+                <div id="2fa" class="form-group">
+                    {{ form.mfa.label(class="form-control-label") }}
+
+                    {% if form.mfa.errors%}
+                        {{ form.mfa(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.mfa.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.mfa(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+
+                <div id="pword" class="form-group">
+                    {{ form.pword.label(class="form-control-label") }}
+                    {% if form.pword.errors%}
+                        {{ form.pword(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.pword.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.pword(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+
+                <div class="form-check">
+                    {{ form.remember(class="form-check-input")}}
+                    {{ form.remember.label(class="form-check-label")}}
+
+
+                </div>
+            </fieldset>
+
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password?</a>
+            </small>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Need an Account? <a class="ml-2" href="{{ url_for('register') }}"> Register Now!</a>
+        </small>
+    </div>
+{% endblock content %}
