@@ -56,7 +56,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(uname=form.uname.data).first()
-        mfa = User.query.filter_by(mfa=form.mfa.data).first()
+        mfa = form.mfa.data
         if user and (mfa == user.mfa) and bcrypt.check_password_hash(user.pword, form.pword.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -64,8 +64,8 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('home'))
         elif not user:
             flash(f'FAILURE: The user, {form.uname.data}, does not exist or is incorrect!', 'danger')
-        elif user.mfa != mfa:
-            flash(f'FAILURE: Incorrect 2fa used.', 'danger')
+        elif mfa != user.mfa:
+            flash('FAILURE: Incorrect 2fa used.', 'danger')
         else:
             flash('FAILURE: Your credentials are incorrect. Please check your credentials.', 'danger')
     return render_template('login.html', title='Login', form=form)
